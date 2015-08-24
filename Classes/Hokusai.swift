@@ -117,11 +117,12 @@ final public class HOKButton: UIButton {
     }
     
     func setFontName(fontName: String?) {
-        let name:String
-        if let fontName = fontName where !fontName.isEmpty {
-            name = fontName
-        } else {
-            name = kDefaultFont
+        var name:String
+        name = kDefaultFont
+        if !(fontName?.isEmpty != nil) {
+            if let fontName = fontName {
+                name = fontName
+            }
         }
         self.titleLabel?.font = UIFont(name: name, size:kFontSize)
     }
@@ -136,7 +137,11 @@ final public class HOKMenuView: UIView {
     private var displayLink: CADisplayLink?
     private let shapeLayer     = CAShapeLayer()
     private var bendableOffset = UIOffsetZero
-    
+
+    override init() {
+        super.init()
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -231,7 +236,7 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
         fatalError("NSCoding not supported")
     }
 
-    required public init() {
+    required public override init() {
         super.init(nibName:nil, bundle:nil)
         view.frame            = UIScreen.mainScreen().bounds
         view.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
