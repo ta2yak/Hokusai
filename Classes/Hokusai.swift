@@ -138,15 +138,11 @@ final public class HOKMenuView: UIView {
     private let shapeLayer     = CAShapeLayer()
     private var bendableOffset = UIOffsetZero
 
-    override init() {
-        super.init()
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
@@ -232,14 +228,14 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
     public var fontName           = ""
     public var colors:HOKColors!  = nil
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("NSCoding not supported")
     }
 
-    required public override init() {
+    required public init() {
         super.init(nibName:nil, bundle:nil)
         view.frame            = UIScreen.mainScreen().bounds
-        view.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
+        view.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
         view.backgroundColor  = UIColor.clearColor()
         
         menuView.frame = view.frame
@@ -337,7 +333,7 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
                 rv.addSubview(view)
             }
         } else {
-            println("Hokusai::  You have to call show() after the controller has appeared.")
+            print("Hokusai::  You have to call show() after the controller has appeared.")
             return
         }
         
@@ -376,9 +372,9 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
         
         // Debug
         if (buttons.count == 0) {
-            println("Hokusai::  The menu has no item yet.")
+            print("Hokusai::  The menu has no item yet.")
         } else if (buttons.count > 6) {
-            println("Hokusai::  The menu has lots of items.")
+            print("Hokusai::  The menu has lots of items.")
         }
     }
     
@@ -401,7 +397,7 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
             delay: 0.0,
             usingSpringWithDamping: 0.6,
             initialSpringVelocity: 0.6,
-            options: .BeginFromCurrentState | .AllowUserInteraction | .OverrideInheritedOptions,
+            options: [.BeginFromCurrentState, .AllowUserInteraction, .OverrideInheritedOptions],
             animations: {
                 self.menuView.frame = CGRect(origin: CGPoint(x: 0.0, y: self.view.frame.height-self.menuView.frame.height), size: self.menuView.frame.size)
                 self.menuView.layoutIfNeeded()
@@ -419,7 +415,7 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
             delay: 0.0,
             usingSpringWithDamping: 100.0,
             initialSpringVelocity: 0.6,
-            options: .BeginFromCurrentState | .AllowUserInteraction | .OverrideInheritedOptions | .CurveEaseOut,
+            options: [.BeginFromCurrentState, .AllowUserInteraction, .OverrideInheritedOptions, .CurveEaseOut],
             animations: {
                 self.view.backgroundColor = UIColor.clearColor()
                 self.menuView.frame       = CGRect(origin: CGPoint(x: 0.0, y: self.view.frame.height), size: self.menuView.frame.size)
@@ -438,7 +434,7 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
             let control = UIControl()
             control.sendAction(btn.selector, to:btn.target, forEvent:nil)
         } else {
-            println("Unknow action type for button")
+            print("Unknow action type for button")
         }
         dismiss()
     }
